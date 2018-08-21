@@ -118,10 +118,39 @@ const p2 = new Promise((resolve,reject)=>{
 });
 p2.then(value=>console.log(value)).catch(error=>console.log(error));
 //resolve和reject并不会终结Promise参数函数的执行
-const finalPromise = new Promise((resolve,reject)=>{
-    resolve('resolve');
-    return;
+new Promise((resolve,reject)=>{
+    resolve('resolve');//在语句之前加入return后才不会执行后面的语句
     console.log('resolve之后');//此段会在resolve方法之前执行
 }).then(r=>{
     console.log(r);
 });
+
+//==使用then链式编程==================================
+/*每次then都会返回一个新的promise实例，并且将上一次then的返回值作为参数传递下去*/
+new Promise((resolve,reject)=>{
+    return resolve(1+1*100);
+}).then((val)=>{
+    console.log(val);
+    return 2+1*100;
+}).then((val)=>{
+    console.log(val);
+    throw new Error("this fail");
+}).catch((error)=>{
+    console.log(error);
+});
+
+//==catch用于指定发生错误时的回调========================
+//一般捕捉错误都使用catch，而不是then方法的第二个参数
+new Promise((resolve,reject)=>{
+    reject(new Error('fail in catch'));
+}).catch((err)=>{
+    console.log(err);
+});
+
+//promise内部的错误不会影响外部的代码运行
+new Promise((resolve,reject)=>{
+    reject(new Error('promise fail'));
+}).then(()=>{
+    console.log('this is promise resolve');
+});
+setTimeout(()=>{console.log(123)},1000);
