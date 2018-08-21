@@ -1,4 +1,4 @@
-//==创建promise实例，并且在下方进行使用=======================================
+/*//==创建promise实例，并且在下方进行使用=======================================
 //ES6中统一了语法，原生提供了Promise对象
 //Promise里面保存着某个未来才会结束的事件。
 const promise = new Promise((resolve,reject)=>{
@@ -126,7 +126,7 @@ new Promise((resolve,reject)=>{
 });
 
 //==使用then链式编程==================================
-/*每次then都会返回一个新的promise实例，并且将上一次then的返回值作为参数传递下去*/
+/!*每次then都会返回一个新的promise实例，并且将上一次then的返回值作为参数传递下去*!/
 new Promise((resolve,reject)=>{
     return resolve(1+1*100);
 }).then((val)=>{
@@ -154,3 +154,26 @@ new Promise((resolve,reject)=>{
     console.log('this is promise resolve');
 });
 setTimeout(()=>{console.log(123)},1000);
+
+//==finally方法====================================
+//如字面意思，不论promise的执行结果，都会执行finally方法
+new Promise((resolve, reject)=>{
+    return resolve(1234);
+}).then(()=>{
+
+}).catch(()=>{
+
+}).finally(()=>{
+    console.log("finally");
+});*/
+
+//==Promise.all方法的使用=================================
+const pp1 = new Promise((resolve, reject)=>{resolve('111')});
+const pp2 = new Promise((resolve, reject)=>{resolve('222')});
+const pp3 = new Promise((resolve, reject)=>{resolve('333')})
+Promise.all([pp1,pp2,pp3]).then((val)=>{
+    console.log(val);//只有三个promise都变成resolve的时候才会执行then方法
+}).catch((err)=>{
+    console.error(err);//三个promise其中一个reject都会执行catch
+});
+
