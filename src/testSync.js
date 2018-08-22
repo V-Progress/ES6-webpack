@@ -177,3 +177,4 @@ Promise.all([pp1,pp2,pp3]).then((val)=>{
     console.error(err);//三个promise其中一个reject都会执行catch
 });
 
+//11111111111111111111111111
